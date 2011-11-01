@@ -1,7 +1,25 @@
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
-$:.unshift File.join(File.dirname(__FILE__), '..', '..', 'rake')
+#
+# CRK – Cracking cryptographic hash functions using the Web 2.0 
+# Copyright © 2011 Filip van Laenen <f.a.vanlaenen@ieee.org>
+#
+# This file is part of CRK.
+#
+# CRK is free software: you can redistribute it and/or modify it under the terms of the GNU General
+# Public License as published by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# CRK is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+# Public License for more details.
+# 
+# You can find a copy of the GNU General Public License in /doc/gpl.txt
+#
 
-require 'heckle'
+#
+# Rake file, to run the unit tests, test coverage, static code analysis and mutation testing.
+#
+
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 task :default => [:test]
 
@@ -38,7 +56,11 @@ task :rcov => "rcov:clean"
 			t.test_files = FileList["test/*_#{target}_test.rb"]
 			t.output_dir = "qa/rcov/#{target}"
 			t.verbose = true
-			t.rcov_opts << '-x "\A/usr/local/lib" --aggregate rcov.data'
+			t.rcov_opts << '-x "\A/usr/local/lib,\A/var/lib/gems"'
+			t.rcov_opts << '--sort coverage'
+			t.rcov_opts << '--sort-reverse'
+			t.rcov_opts << '--text-report'
+			t.rcov_opts << '--aggregate rcov.data'
 		end
 	end
 	task :rcov => "rcov:#{target}"
@@ -64,7 +86,7 @@ end
 
 namespace :heckle do
 	desc "Deleting all heckle log files from previous run."
-	task(:clean) { system ("rm qa/heckle/*.log") }
+	task(:clean) { system ("rm qa/heckle-*.log") }
 end
 
 desc "Mutation testing with Heckle"
