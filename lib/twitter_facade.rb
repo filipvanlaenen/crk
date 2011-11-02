@@ -43,7 +43,7 @@ class TwitterFacade
 		when Net::HTTPSuccess, Net::HTTPRedirection
 			return true
 		else
-			Services.log.error("Couldn't tweet a message: #{res.body}")
+			Services.log.error("Couldn't tweet a message: #{res.body}.")
 			return false
 		end		
 	

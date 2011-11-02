@@ -35,14 +35,14 @@ class TweetTask
 		begin
 			success = Services.twitter.tweet(@message)
 		rescue Exception => e
-			Services.log.warn("Exception occured while trying to tweet #{@message}: #{e.message}")
+			Services.log.warn("Exception occured while trying to tweet #{@message}: #{e.message}.")
 			return [self]			
 		end
 		if (success)
-			Services.log.info("Tweeted #{@message}")
+			Services.log.info("Tweeted #{@message}.")
 			return []
 		else
-			Services.log.warn("Error occured while trying to tweet #{@message}")
+			Services.log.warn("Error occured while trying to tweet #{@message}.")
 			return [self]
 		end
 	end

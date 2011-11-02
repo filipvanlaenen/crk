@@ -52,7 +52,7 @@ class SegmentCompletionTask
 		if (colliding_segment == nil)
 			return []
 		else
-			Services.log.info("Segment found in cache with end point #{@result.result}, starting with #{colliding_segment.start}; will try to resolve the collision")
+			Services.log.info("Segment found in cache with end point #{@result.result}, starting with #{colliding_segment.start}; will try to resolve the collision.")
 			tweet_task = TweetTask.new(Services.digester.colliding_segments_twitter_message(@result, colliding_segment))
 			colliding_segments_task = CollidingSegmentsTask.new(@result, colliding_segment, @distinction_scale)
 			return [tweet_task, colliding_segments_task]
@@ -62,10 +62,10 @@ class SegmentCompletionTask
 	def next_calculation_task
 		next_segment_in_path = @@cache.get_next_segment_in_path(@result)
 		if (next_segment_in_path == nil)
-			Services.log.info("No segment found in cache with end point #{@result.result}; continuing calculations from there")
+			Services.log.info("No segment found in cache with end point #{@result.result}; continuing calculations from there.")
 			return [CalculationTask.new(@result.result, @result.result, 0, @distinction_scale)]
 		else 
-			Services.log.info("Segment found in cache with having end point #{@result.result} as starting point; will not continue this path")
+			Services.log.info("Segment found in cache with having end point #{@result.result} as starting point; will not continue this path.")
 			return []
 		end
 	end

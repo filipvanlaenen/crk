@@ -49,7 +49,7 @@ class Crk
 		initialize_calculation_task_class
 		initialize_segment_completion_task_class
 		initialize_twitter_service
-		Services.log.debug "Configuration loaded from #{configuration_yaml}"
+		Services.log.debug "Configuration loaded from #{configuration_yaml}."
 	end
 	
 	def initialize_logging
@@ -84,7 +84,7 @@ class Crk
 	
 	def load_state
 		@state = load_yaml_file(@state_yaml)
-		Services.log.debug "State loaded from #{@state_yaml}"
+		Services.log.debug "State loaded from #{@state_yaml}."
 	end
 	
 	def save_state
@@ -109,7 +109,7 @@ class Crk
 	
 	def pick_task
 		if (tasks.empty?)
-			Services.log.info("No tasks available; will create a new, random calculcation task")
+			Services.log.info("No tasks available; will create a new, random calculcation task.")
 			return CalculationTask.random_new(@configuration['distinction_scale'])
 		else
 			return tasks.shift

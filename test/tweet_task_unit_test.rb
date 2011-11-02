@@ -88,7 +88,7 @@ class TweetTaskUnitTest < Test::Unit::TestCase
 
 	def test_perform_logs_if_tweeted_ok
 		@task.perform
-		assert_equal "Tweeted #{Message}", Services.log.info_message(0)
+		assert_equal "Tweeted #{Message}.", Services.log.info_message(0)
 	end
 
 	def test_perform_returns_itself_if_tweeted_not_ok
@@ -104,7 +104,7 @@ class TweetTaskUnitTest < Test::Unit::TestCase
 		Services.twitter = RefusedTwitterFacade.new
 		@task.perform
 		Services.twitter = original_twitter
-		assert_equal "Error occured while trying to tweet #{Message}", Services.log.warn_message(0)
+		assert_equal "Error occured while trying to tweet #{Message}.", Services.log.warn_message(0)
 	end
 
 	def test_perform_returns_itself_if_disconnected
@@ -120,6 +120,6 @@ class TweetTaskUnitTest < Test::Unit::TestCase
 		Services.twitter = DisconnectedTwitterFacade.new
 		@task.perform
 		Services.twitter = original_twitter
-		assert_equal "Exception occured while trying to tweet #{Message}: #{ExceptionMessage}", Services.log.warn_message(0)
+		assert_equal "Exception occured while trying to tweet #{Message}: #{ExceptionMessage}.", Services.log.warn_message(0)
 	end
 end

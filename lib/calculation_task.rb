@@ -92,15 +92,15 @@ class CalculationTask
 	
 	def perform
 		if (@length == 0)
-			Services.log.debug "Starting calculations on the segment starting with #{@start}"
+			Services.log.debug "Starting calculations on the segment starting with #{@start}."
 		else
-			Services.log.debug "Continuing calculations on the segment starting with #{@start} at #{@current}, #{@length} iterations already done"
+			Services.log.debug "Continuing calculations on the segment starting with #{@start} at #{@current}, #{@length} iterations already done."
 		end
 		before = Services.time.now
 		current_distinguished = run_iterations
 		after = Services.time.now
 		if (current_distinguished)
-			Services.log.info "Found the distinguished point #{@current} after #{@length} iterations for the segment starting with #{@start}"
+			Services.log.info "Found the distinguished point #{@current} after #{@length} iterations for the segment starting with #{@start}."
 			return create_tasks_for_new_distinguished_point
 		else
 			sleep_to_compensate_cpu_time(after - before)
@@ -110,7 +110,7 @@ class CalculationTask
 	
 	def sleep_to_compensate_cpu_time(time_used)
 		sleeping_time = time_used * ((1 / @@cpu_share) - 1)
-		Services.log.debug("Worked for #{time_used}s; will sleep #{sleeping_time}s")
+		Services.log.debug("Worked for #{time_used}s; will sleep #{sleeping_time}s.")
 		Services.time.sleep(sleeping_time)
 	end
 	

@@ -171,19 +171,19 @@ class CalculationTaskUnitTest < Test::Unit::TestCase
 	def test_log_perform_first_calculation
 		CalculationTask.max_iterations_allowed = MaxIterationsAllowed
 		@first_task_scale_10.perform
-		assert_equal "Starting calculations on the segment starting with #{TaskStart}", Services.log.debug_message(0)
+		assert_equal "Starting calculations on the segment starting with #{TaskStart}.", Services.log.debug_message(0)
 	end
 	
 	def test_log_perform_calculation_no_result
 		CalculationTask.max_iterations_allowed = MaxIterationsAllowed
 		@next_task_scale_10.perform
-		assert_equal "Continuing calculations on the segment starting with #{TaskStart} at #{NextTaskCurrentPoint}, #{NextTaskCurrentLength} iterations already done", Services.log.debug_message(0)
+		assert_equal "Continuing calculations on the segment starting with #{TaskStart} at #{NextTaskCurrentPoint}, #{NextTaskCurrentLength} iterations already done.", Services.log.debug_message(0)
 	end
 
 	def test_log_perform_calculation_with_result
 		CalculationTask.max_iterations_allowed = 1000
 		@first_task_scale_1.perform
-		assert_equal "Found the distinguished point #{FirstDistinguishedPointAtScale1} after 366 iterations for the segment starting with #{TaskStart}", Services.log.info_message(0)
+		assert_equal "Found the distinguished point #{FirstDistinguishedPointAtScale1} after 366 iterations for the segment starting with #{TaskStart}.", Services.log.info_message(0)
 	end
 
 	def test_log_perform_calculation_at_10_percent_cpu_share_requests_90_percent_sleep_time
@@ -191,7 +191,7 @@ class CalculationTaskUnitTest < Test::Unit::TestCase
 		CalculationTask.cpu_share = 0.1
 		CalculationTask.max_iterations_allowed = MaxIterationsAllowed
 		@first_task_scale_10.perform
-		assert_equal "Worked for 1.0s; will sleep 9.0s", Services.log.debug_message(1)
+		assert_equal "Worked for 1.0s; will sleep 9.0s.", Services.log.debug_message(1)
 	end
 	
 	# random_new

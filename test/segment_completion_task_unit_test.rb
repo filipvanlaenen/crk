@@ -128,21 +128,21 @@ class SegmentCompletionTaskUnitTest < Test::Unit::TestCase
 
 	def test_logs_when_no_collision_found
 		@a_task.perform
-		assert_equal "No segment found in cache with end point #{TaskEnd}; continuing calculations from there", Services.log.info_message(0)
+		assert_equal "No segment found in cache with end point #{TaskEnd}; continuing calculations from there.", Services.log.info_message(0)
 	end
 
 	def test_logs_when_a_collision_found
 		other_result = Result.new(OtherDistinguishedPoint, TaskEnd, TaskLength)
 		@cache.store(other_result)
 		@a_task.perform
-		assert_equal "Segment found in cache with end point #{TaskEnd}, starting with #{OtherDistinguishedPoint}; will try to resolve the collision", Services.log.info_message(0)
+		assert_equal "Segment found in cache with end point #{TaskEnd}, starting with #{OtherDistinguishedPoint}; will try to resolve the collision.", Services.log.info_message(0)
 	end
 
 	def test_logs_when_segment_starting_with_last_result_present_in_cache
 		other_result = Result.new(TaskEnd, OtherDistinguishedPoint, TaskLength)
 		@cache.store(other_result)
 		@a_task.perform
-		assert_equal "Segment found in cache with having end point #{TaskEnd} as starting point; will not continue this path", Services.log.info_message(0)
+		assert_equal "Segment found in cache with having end point #{TaskEnd} as starting point; will not continue this path.", Services.log.info_message(0)
 	end
 
 	def test_logs_when_segment_starting_with_last_result_present_in_cache_also_if_collision_found
@@ -151,7 +151,7 @@ class SegmentCompletionTaskUnitTest < Test::Unit::TestCase
 		next_segment_on_path = Result.new(TaskEnd, AnotherDistinguishedPoint, TaskLength * 3)
 		@cache.store(next_segment_on_path)
 		@a_task.perform
-		assert_equal "Segment found in cache with having end point #{TaskEnd} as starting point; will not continue this path", Services.log.info_message(1)
+		assert_equal "Segment found in cache with having end point #{TaskEnd} as starting point; will not continue this path.", Services.log.info_message(1)
 	end
 
 end

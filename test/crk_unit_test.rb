@@ -65,11 +65,11 @@ class CrkUnitTest < Test::Unit::TestCase
 	# initialize
 	
 	def test_logs_that_configuration_has_been_loaded
-		assert_equal "Configuration loaded from #{ConfigYaml}", Services.log.debug_message(0)
+		assert_equal "Configuration loaded from #{ConfigYaml}.", Services.log.debug_message(0)
 	end
 
 	def test_logs_that_state_has_been_loaded
-		assert_equal "State loaded from #{StateYaml}", Services.log.debug_message(1)
+		assert_equal "State loaded from #{StateYaml}.", Services.log.debug_message(1)
 	end
 
 	# add_tasks
@@ -92,7 +92,7 @@ class CrkUnitTest < Test::Unit::TestCase
 	
 	def test_log_pick_task_creates_new_calculation_task_when_tasks_empty
 		@crk.pick_task
-		assert_equal "No tasks available; will create a new, random calculcation task", Services.log.info_message(0)
+		assert_equal "No tasks available; will create a new, random calculcation task.", Services.log.info_message(0)
 	end
 
 	# tasks
