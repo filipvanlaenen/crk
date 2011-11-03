@@ -40,6 +40,7 @@ cp ${BINDIR}/sha1crk.rb "$TEMPDIR"
 cp ${BINDIR}/sha1crk.sh "$TEMPDIR"
 cp ${BINDIR}/sha1crk_init.rb "$TEMPDIR"
 cp ${BINDIR}/sha1crk_init.sh "$TEMPDIR"
+cp ${BINDIR}/sha1crk_kill.sh "$TEMPDIR"
 cp ${BINDIR}/sha1crk_start.sh "$TEMPDIR"
 cp ${BINDIR}/sha1crk_status.sh "$TEMPDIR"
 

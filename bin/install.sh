@@ -39,6 +39,7 @@ cp png/*.png "$CRKDIR/png"
 cp sha1crk* "$CRKDIR"
 chmod a+x "$CRKDIR/sha1crk.sh"
 chmod a+x "$CRKDIR/sha1crk_init.sh"
+chmod a+x "$CRKDIR/sha1crk_kill.sh"
 chmod a+x "$CRKDIR/sha1crk_start.sh"
 chmod a+x "$CRKDIR/sha1crk_status.sh"
 ln -f "$CRKDIR/sha1crk.sh" /usr/bin/sha1crk

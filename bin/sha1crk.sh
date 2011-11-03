@@ -36,7 +36,7 @@ case "$ACTION" in
     echo "Stopping SHA1CRK not implemented yet."
     ;;
   kill)
-    echo "Killing SHA1CRK not implemented yet."
+    ${CRKDIR}/sha1crk_kill.sh
     ;;
   status)
     ${CRKDIR}/sha1crk_status.sh
@@ -52,7 +52,7 @@ case "$ACTION" in
     echo "  init        initialize sha1crk"
     echo "  start       start sha1crk"
     echo "  stop        (Not implemented yet)"
-    echo "  kill        (Not implemented yet)"
+    echo "  kill        kill all sha1crk processes"
     echo "  status      show status for sha1crk"
     echo "  help        show this message"
     echo "  version     show the version information"
