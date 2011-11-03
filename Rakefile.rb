@@ -91,18 +91,39 @@ end
 
 desc "Mutation testing with Heckle"
 task :heckle => "heckle:clean" do
-	# Unit tests
-	heckle('cache.rb', 'Cache', 'test/cache_unit_test.rb')
-	heckle('calculation_task.rb', 'CalculationTask', 'test/calculation_task_unit_test.rb', nil, ['hexdecode', 'hexencode'])
-	heckle('colliding_segments_task.rb', 'CollidingSegmentsTask', 'test/colliding_segments_task_unit_test.rb')
-#	heckle('crk.rb', 'Crk', 'test/crk_unit_test.rb', nil, ['continue', 'initialize_calculation_task_class', 'initialize_logging', 'initialize_segment_completion_task_class', 'initialize_twitter_service', 'load_configuration', 'save_state'])
-	heckle('digester.rb', 'Digester', 'test/sha1_unit_test.rb')
-	heckle('ptsha1.rb', 'PTSHA1', 'test/ptsha1_unit_test.rb')
-	heckle('result.rb', 'Result', 'test/result_unit_test.rb')
-	heckle('segment_completion_task.rb', 'SegmentCompletionTask', 'test/segment_completion_task_unit_test.rb')
-	heckle('tweet_task.rb', 'TweetTask', 'test/tweet_task_unit_test.rb')
-	#heckle('sha1.rb', 'Sha1', 'test/sha1_unit_test.rb')
+	number_of_mutations = 0
+	number_of_mutations += Heckle.new('Cache').defined_in('cache.rb') \
+										      .tested_by('cache_unit_test.rb') \
+										      .heckle
+	number_of_mutations += Heckle.new('CalculationTask').defined_in('calculation_task.rb') \
+													    .tested_by('calculation_task_unit_test.rb') \
+													    .skip('hexdecode', 'hexencode') \
+													    .heckle
+	number_of_mutations += Heckle.new('CollidingSegmentsTask').defined_in('colliding_segments_task.rb') \
+														      .tested_by('colliding_segments_task_unit_test.rb') \
+														      .heckle
+	number_of_mutations += Heckle.new('Digester').defined_in('digester.rb') \
+											     .tested_by('sha1_unit_test.rb') \
+											     .heckle
+	number_of_mutations += Heckle.new('PTSHA1').defined_in('ptsha1.rb') \
+											   .tested_by('ptsha1_unit_test.rb') \
+											   .heckle
+	number_of_mutations += Heckle.new('Result').defined_in('result.rb') \
+											   .tested_by('result_unit_test.rb') \
+											   .heckle
+	number_of_mutations += Heckle.new('SegmentCompletionTask').defined_in('segment_completion_task.rb') \
+														      .tested_by('segment_completion_task_unit_test.rb') \
+														      .heckle
+#	number_of_mutations += Heckle.new('SHA1').defined_in('sha1.rb') \
+#										     .tested_by('sha1_unit_test.rb') \
+#										     .heckle
+	number_of_mutations += Heckle.new('TweetTask').defined_in('tweet_task.rb') \
+											      .tested_by('tweet_task_unit_test.rb') \
+											      .heckle
+	puts "Total number of mutations checked: #{number_of_mutations}."	
 end
+
+
 
 # Method to read the contents of a file
 
@@ -117,4 +138,69 @@ def read_file(filename)
 		file.close
 	end
 	return content.strip
+end
+
+# Heckle class
+
+class Heckle
+
+	def initialize(classname)
+		@classname = classname
+		@exclude_methods = nil
+	end
+	
+	def defined_in(codefile)
+		@codefile = codefile
+		return self
+	end
+	
+	def tested_by(testfile)
+		@testfile = "test/#{testfile}"
+		return self
+	end
+	
+	def skip(*method_names)
+		if (@exclude_methods == nil)
+			@exclude_methods = []
+		end
+		@exclude_methods = @exclude_methods + method_names
+		return self
+	end
+
+	def heckle(include_methods = nil)
+		require @codefile
+		klass = Object.const_get("#{@classname}")
+		if (include_methods == nil)
+			methods = klass.instance_methods.sort - klass.superclass.instance_methods
+		else
+			methods = include_methods
+		end
+		if (@exclude_methods != nil)
+			methods = methods.reject { | method | @exclude_methods.include?(method.to_s) }
+		end
+		puts "Doing mutation testing on #{methods.length} method(s) of #{@classname} against #{@testfile}:"
+		number_of_mutations = 0
+		i = 0
+		methods.each do |method|
+			i += 1
+			puts " o #{@classname}##{method} [#{i}/#{methods.length}]"
+			heckle_log = "qa/heckle-#{@classname}##{method}.log"
+			cmd = "heckle #{@classname} #{method} -t #{@testfile} -F > #{heckle_log}"
+			system(cmd)
+			result = read_file(heckle_log)
+			while (result.include?("Mutation caused a syntax error:")) do
+				system(cmd)
+				result = read_file(heckle_log)
+				puts "   -> Mutation caused a syntax error -- re-running this task."
+			end
+			if (!result.include?("All heckling was thwarted! YAY!!!"))
+				raise "#{result}\nRe-run this specific test case using '#{cmd}'."
+			elsif (result =~ /loaded with (\d+) possible mutations/)
+				number_of_mutations += $1.to_i
+			end
+		end
+		puts "Checked #{number_of_mutations} mutations, and no issues were found in #{@classname}."
+		return number_of_mutations
+	end
+
 end
