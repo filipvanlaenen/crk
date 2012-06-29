@@ -60,8 +60,8 @@ class Crk
 	end
 	
 	def initialize_twitter_service
-		if (@configuration['oauth_access_token_filename'] != nil)
-			Services.twitter.load_oauth_access_token(@configuration['oauth_access_token_filename'])
+		if (@configuration['oauth_consumer_key'] != nil)
+			Services.twitter.configure(@configuration['oauth_consumer_key'], @configuration['oauth_consumer_secret'], @configuration['oauth_access_token'], @configuration['oauth_access_token_secret'])
 		end
 	end
 	

@@ -19,34 +19,38 @@
 # Facade for Twitter
 #
 
-require 'oauth'
+require 'twitter'
 
 class TwitterFacade
 	
 	TwitterServer = "twitter.com"
 	
 	def initialize
+		@configured = false
 	end
-	
-	def load_oauth_access_token(oauth_access_token_dump)
-		oauth_access_token = Services.io.read(oauth_access_token_dump)
-		@access_token = Marshal.load(oauth_access_token)
+
+	def configure(oauth_consumer_key, oauth_consumer_secret, oauth_access_token, oauth_access_token_secret)
+		Twitter.configure do |config|
+			config.consumer_key = oauth_consumer_key
+			config.consumer_secret = oauth_consumer_secret
+			config.oauth_token = oauth_access_token
+			config.oauth_token_secret = oauth_access_token_secret
+		end
+		@configured = true
 	end
-	
+		
 	def tweet(message)
-		if (@access_token == nil)
-			Services.log.error("Can't tweet messages when there is no OAuth access token available.")
+		if (!@configured)
+			Services.log.error("Can't tweet messages when the Twitter client hasn't been configured.")
 			return false
 		end
-		res = @access_token.post('/statuses/update.json', {'status'=>message})
-		case res
-		when Net::HTTPSuccess, Net::HTTPRedirection
+		begin
+			Twitter.update(message)
 			return true
-		else
-			Services.log.error("Couldn't tweet a message: #{res.body}.")
+		rescue Exception => e
+			Services.log.error("Couldn't tweet a message: #{e.message}.")
 			return false
-		end		
-	
+		end
 	end
 		
 end

@@ -49,9 +49,9 @@ if [ ${#LOG4R[@]} -eq "0" ]; then
 	$GEM install -r log4r
 fi
 
-OAUTH=$(gem1.9.1 list oauth | awk '/oauth/ {print $1}')
-if [ ${#OAUTH[@]} -eq "0" ]; then
-	$GEM install -r oauth
+TWITTER=$(gem1.9.1 list twitter | awk '/twitter/ {print $1}')
+if [ ${#TWITTER[@]} -eq "0" ]; then
+	$GEM install -r twitter
 fi
 
 apt-get install libnotify-bin
