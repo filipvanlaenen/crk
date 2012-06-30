@@ -22,7 +22,7 @@
 
 CRKDIR="/opt/crk"
 ACTION="$1"
-VERSION="0.3a"
+VERSION="0.3b"
 COPYRIGHTYEAR="2011"
 
 case "$ACTION" in
