@@ -23,20 +23,20 @@ require 'digester'
 require 'digest/sha1'
 
 class SHA1 < Digester
-	
-	AlgorithmName = "SHA-1"
-	TwitterTag = "SHA1CRK"
-	
-	def digest(message)
-		return Digest::SHA1.digest(message)
-	end
-	
-	def algorithm_name
-		return AlgorithmName
-	end
+  
+  AlgorithmName = "SHA-1"
+  TwitterTag = "SHA1CRK"
+  
+  def digest(message)
+    return Digest::SHA1.digest(message)
+  end
+  
+  def algorithm_name
+    return AlgorithmName
+  end
 
-	def twitter_tag
-		return TwitterTag
-	end	
+  def twitter_tag
+    return TwitterTag
+  end  
 
 end

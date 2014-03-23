@@ -20,18 +20,18 @@
 #
 
 class ArrayTwitterFacade
-	
-	def initialize
-		@tweets = []
-	end
-	
-	def tweet(message)
-		@tweets << message
-		return true
-	end
-	
-	def last_tweet
-		return @tweets.last
-	end
-	
+  
+  def initialize
+    @tweets = []
+  end
+  
+  def tweet(message)
+    @tweets << message
+    return true
+  end
+  
+  def last_tweet
+    return @tweets.last
+  end
+  
 end

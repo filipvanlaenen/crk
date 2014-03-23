@@ -22,12 +22,12 @@
 
 PIDS=$(ps ux | awk '/sha1crk\.rb/ && !/awk/ {print $2}')
 if [ ${#PIDS[@]} -ne "0" ]; then
-	echo "SHA1CRK seems to be running. Will try to kill the processes with the following IDs:"
-	echo "${PIDS}"
-	for PID in $PIDS
-	do
+  echo "SHA1CRK seems to be running. Will try to kill the processes with the following IDs:"
+  echo "${PIDS}"
+  for PID in $PIDS
+  do
         kill $PID
-	done
+  done
 else
-	echo "It doesn't look like there's an instance of SHA1CRK running."
+  echo "It doesn't look like there's an instance of SHA1CRK running."
 fi

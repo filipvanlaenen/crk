@@ -46,12 +46,12 @@ ln -f "$CRKDIR/sha1crk.sh" /usr/bin/sha1crk
 
 LOG4R=$(gem1.9.1 list log4r | awk '/log4r/ {print $1}')
 if [ ${#LOG4R[@]} -eq "0" ]; then
-	$GEM install -r log4r
+  $GEM install -r log4r
 fi
 
 TWITTER=$(gem1.9.1 list twitter | awk '/twitter/ {print $1}')
 if [ ${#TWITTER[@]} -eq "0" ]; then
-	$GEM install -r twitter
+  $GEM install -r twitter
 fi
 
 apt-get install libnotify-bin

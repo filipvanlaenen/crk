@@ -31,32 +31,32 @@ state_yaml = File.join(local_sha1crk_dir, 'sha1crk-state.yaml')
 io = IoFacade.new
 
 if (File.exist?(configuration_yaml))
-	value_status = 'current'
-	configuration = YAML::load(io.read(configuration_yaml))
+  value_status = 'current'
+  configuration = YAML::load(io.read(configuration_yaml))
 else
-	value_status = 'default'
-	configuration = {}
-	configuration['digester'] = 'SHA1'
-	configuration['digester_libfile'] = 'sha1.rb'
-	configuration['distinction_scale'] = 4
-	configuration['max_iterations_allowed'] = 1000000
-	configuration['cpu_share'] = 0.1
-	configuration['state_yaml'] = state_yaml
-	configuration['log_filename'] = File.join(local_sha1crk_dir, 'sha1crk.log')
-	configuration['cache_dir'] = File.join(local_sha1crk_dir, 'cache')
-	configuration['oauth_consumer_key'] = nil
-	configuration['oauth_consumer_secret'] = nil
-	configuration['oauth_access_token'] = nil
-	configuration['oauth_access_token_secret'] = nil
+  value_status = 'default'
+  configuration = {}
+  configuration['digester'] = 'SHA1'
+  configuration['digester_libfile'] = 'sha1.rb'
+  configuration['distinction_scale'] = 4
+  configuration['max_iterations_allowed'] = 1000000
+  configuration['cpu_share'] = 0.1
+  configuration['state_yaml'] = state_yaml
+  configuration['log_filename'] = File.join(local_sha1crk_dir, 'sha1crk.log')
+  configuration['cache_dir'] = File.join(local_sha1crk_dir, 'cache')
+  configuration['oauth_consumer_key'] = nil
+  configuration['oauth_consumer_secret'] = nil
+  configuration['oauth_access_token'] = nil
+  configuration['oauth_access_token_secret'] = nil
 end
 
 cpu_share = (configuration['cpu_share'] * 100).to_i
 print "Enter the load on the CPU [0-100, #{value_status} #{cpu_share}]: "
 cpu_share = STDIN.readline.chomp.to_i
 if (cpu_share < 1 || cpu_share > 100)
-	cpu_share = 0.1
+  cpu_share = 0.1
 else
-	cpu_share = cpu_share.to_f / 100
+  cpu_share = cpu_share.to_f / 100
 end
 puts "Registering a CPU load of #{(cpu_share * 100).to_i}%."
 configuration['cpu_share'] = cpu_share
@@ -84,15 +84,15 @@ puts "Created the configuration file: #{configuration_yaml}"
 
 write_state_yaml = true
 if (File.exist?(state_yaml))
-	print 'Should the state be flushed [YN, default N]: '
-	flush_state = STDIN.readline.chomp.upcase
-	write_state_yaml = (flush_state == 'Y')
+  print 'Should the state be flushed [YN, default N]: '
+  flush_state = STDIN.readline.chomp.upcase
+  write_state_yaml = (flush_state == 'Y')
 end
 if (write_state_yaml)
-	state = {}
-	state['tasks'] = []
-	io.write(state_yaml, state.to_yaml)
-	puts "Created an empty, default state file: #{state_yaml}"
+  state = {}
+  state['tasks'] = []
+  io.write(state_yaml, state.to_yaml)
+  puts "Created an empty, default state file: #{state_yaml}"
 else
-	puts "Kept the current state file."
+  puts "Kept the current state file."
 end

@@ -21,12 +21,12 @@
 
 class DummyRandFacade
 
-	def initialize(value)
-		@value = value
-	end
+  def initialize(value)
+    @value = value
+  end
 
-	def rand(max = 0)
-		return @value
-	end
-	
+  def rand(max = 0)
+    return @value
+  end
+  
 end

@@ -20,9 +20,9 @@
 #
 
 class RandFacade
-	
-	def rand(max = 0)
-		return Kernel.rand(max)
-	end
-	
+  
+  def rand(max = 0)
+    return Kernel.rand(max)
+  end
+  
 end

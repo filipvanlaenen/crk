@@ -22,13 +22,13 @@
 require 'time'
 
 class TimeFacade
-	
-	def now
-		return Time.now
-	end
-	
-	def sleep(seconds)
-		Kernel.sleep(seconds)
-	end
-			
+  
+  def now
+    return Time.now
+  end
+  
+  def sleep(seconds)
+    Kernel.sleep(seconds)
+  end
+      
 end
