@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # CRK – Cracking cryptographic hash functions using the Web 2.0.
-# Copyright © 2011 Filip van Laenen <f.a.vanlaenen@ieee.org>
+# Copyright © 2011,2014 Filip van Laenen <f.a.vanlaenen@ieee.org>
 #
 # This file is part of CRK.
 #
