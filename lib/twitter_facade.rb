@@ -25,22 +25,17 @@ class TwitterFacade
   
   TwitterServer = "twitter.com"
   
-  def initialize
-    @configured = false
-  end
-
   def configure(oauth_consumer_key, oauth_consumer_secret, oauth_access_token, oauth_access_token_secret)
-    Twitter.configure do |config|
+    @twitter = Twitter::REST::Client.new do |config|
       config.consumer_key = oauth_consumer_key
       config.consumer_secret = oauth_consumer_secret
-      config.oauth_token = oauth_access_token
-      config.oauth_token_secret = oauth_access_token_secret
+      config.access_token = oauth_access_token
+      config.access_token_secret = oauth_access_token_secret
     end
-    @configured = true
   end
     
   def tweet(message)
-    if (!@configured)
+    if (@twitter == nil)
       Services.log.error("Can't tweet messages when the Twitter client hasn't been configured.")
       return false
     end
